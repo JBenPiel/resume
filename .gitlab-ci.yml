@@ -25,6 +25,7 @@ Validate Terraform:
 Build and Push:
   stage: Build and Push
   image: docker:20.10
+  needs: []
   services:
     - docker:20.10-dind
   script:
@@ -39,19 +40,14 @@ Build and Push:
 Buildx and Push:
   stage: Build and Push
   image: docker:20.10
+  needs: []
   services:
     - name: docker:20.10-dind
       command: ["--experimental"]
-  before_script:
-    - export BUILDX_VERSION="v0.9.1"
-    - mkdir -p ~/.docker/cli-plugins
-    - wget -O ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/$BUILDX_VERSION/buildx-$BUILDX_VERSION.linux-amd64"
-    - chmod a+x ~/.docker/cli-plugins/docker-buildx
-    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    - docker buildx create --use --name mybuilder
   script:
-    - docker login -u $HUB_USER -p $HUB_PASSWORD
     - export DATE=$(date +%Y.%m.%d)
+    - docker login -u $HUB_USER -p $HUB_PASSWORD
+    - docker buildx create --use --name mybuilder
     - docker buildx build --platform linux/amd64,linux/arm64 -t $HUB_REPO:$DATE -t $HUB_REPO:latest . --push
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
