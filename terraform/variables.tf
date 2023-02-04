@@ -22,7 +22,7 @@ variable "ecr_image_resume" {
 
 variable "dns_zone_name" {
   description = "Domain name"
-  default     = "piel.vip"
+  default     = "piel.ninja"
 }
 
 variable "subdomain" {
