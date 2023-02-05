@@ -111,6 +111,7 @@ Production Apply:
 
 Stage Destroy:
   stage: Terraform Destroy
+  needs: []
   script:
     - cd terraform/
     - terraform init
@@ -122,6 +123,7 @@ Stage Destroy:
 
 Production Destroy:
   stage: Terraform Destroy
+  needs: []
   script:
     - cd terraform/
     - terraform init
