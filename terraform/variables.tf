@@ -29,7 +29,7 @@ variable "subdomain" {
   description = "Subdomain per environment"
   type        = map(string)
   default = {
-    prod  = ""
-    stage = "stage."
+    prod  = "jordan."
+    stage = "jordan-stage."
   }
 }
