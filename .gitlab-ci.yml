@@ -55,6 +55,8 @@ Buildx and Push:
 
 Stage Plan:
   stage: Terraform Plan
+  needs:
+    - Validate Terraform
   script:
     - cd terraform/
     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
@@ -78,6 +80,8 @@ Stage Apply:
 
 Production Plan:
   stage: Terraform Plan
+  needs:
+    - Validate Terraform
   script:
     - cd terraform/
     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
