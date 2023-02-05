@@ -68,6 +68,9 @@ Stage Plan:
 
 Stage Apply:
   stage: Terraform Apply
+  needs:
+    - Build and Push
+    - Stage Plan
   script:
     - cd terraform/
     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
@@ -93,6 +96,9 @@ Production Plan:
 
 Production Apply:
   stage: Terraform Apply
+  needs:
+    - Build and Push
+    - Production Plan
   script:
     - cd terraform/
     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
