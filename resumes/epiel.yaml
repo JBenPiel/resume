@@ -42,7 +42,7 @@ work:
     - company: Enervee
       role: Agile Project Manager
       website: https://www.enervee.com/
-      date: Oct. 2021 - Present
+      date: Oct. 2021 - Nov. 2022
       highlights:
         - Agile Project Manager for two cross-functional development teams supporting e-commerce marketplaces encouraging consumers to choose more eco-friendly appliances.
         - Coached one team away from hours based velocity into relative estimation resulting in more consistent planning, a reliable say/do ratio,  and delivery of our sprint objectives.
@@ -111,9 +111,6 @@ education:
     - location: Pima Community College, Tucson, AZ
       date: 2013 - 2013
       summary: EMT Basic Training Certification
-    - location: Prescott High School, Prescott, AZ
-      date: 2004-2008
-      summary: High School Diploma
 
 interests:
     - Motorsports
