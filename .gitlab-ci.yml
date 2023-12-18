@@ -30,7 +30,7 @@ Build and Push:
     - docker:24.0-dind
   script:
     - apk add python3 py3-pip
-    - pip3 install awscli
+    - pip3 install awscli --break-system-packages
     - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e7k4f6o3
     - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA -t $ECR_REPO:latest .
     - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA && docker push $ECR_REPO:latest
