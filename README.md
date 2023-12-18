@@ -7,7 +7,7 @@ Python resume generator. From YAML to PDF and static HTML in Docker.
 
 * [Docker](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
-* To forego using Docker a Python 3.6+ environment is required.
+* To forego using Docker a Python LTS environment is required.
 
 # Installing
 
