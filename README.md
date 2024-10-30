@@ -6,7 +6,6 @@ Python resume generator. From YAML to PDF and static HTML in Docker.
 # Requirements
 
 * [Docker](https://www.docker.com/)
-* [Docker Compose](https://docs.docker.com/compose/install/)
 * To forego using Docker a Python LTS environment is required.
 
 # Installing
@@ -18,7 +17,7 @@ Python resume generator. From YAML to PDF and static HTML in Docker.
 
 ## With Docker:
 
-1. After creating a yaml file for you resume you can build and run it as a web service by running `docker-compose up --build-arg RESUME=<your_resume.yaml>`.
+1. After creating a yaml file for you resume you can build and run it as a web service by running `docker compose up --build-arg RESUME=<your_resume.yaml>`.
 2. Navigate to `localhost:8080` and view your resume.
 
 ### On ECS Fargate:
