@@ -1,6 +1,6 @@
 services:
   terraform:
-    image: hashicorp/terraform:1.9
+    image: hashicorp/terraform:1.10
     volumes:
       - .:/infra
     working_dir: /infra
