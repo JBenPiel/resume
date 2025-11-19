@@ -43,7 +43,7 @@ resource "aws_lb_listener" "resume_https" {
   load_balancer_arn = aws_lb.resume.arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = aws_acm_certificate_validation.cert.certificate_arn
 
   default_action {
