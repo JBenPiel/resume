@@ -5,15 +5,14 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 stages:
-  - Test and Lint
-  - Build and Push
-  - Image Scan
-  - Terraform Plan
-  - Terraform Apply
-  - Terraform Destroy
+  - Validate
+  - Build
+  - Plan
+  - Apply
+  - Destroy
 
-Validate Terraform:
-  stage: Test and Lint
+Validate:
+  stage: Validate
   script:
     - cd terraform/
     - terraform init -backend=false
@@ -22,8 +21,8 @@ Validate Terraform:
   rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(master|stage)$/ || $CI_COMMIT_BRANCH =~ /^(master|stage)$/'
 
-Build and Push:
-  stage: Build and Push
+Build:
+  stage: Build
   image: docker:29.0
   needs: []
   services:
@@ -37,8 +36,8 @@ Build and Push:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(master|stage)$/'
 
-Buildx and Push:
-  stage: Build and Push
+Buildx:
+  stage: Build
   image: docker:29.0
   needs: []
   services:
@@ -52,84 +51,84 @@ Buildx and Push:
     - if: '$CI_COMMIT_BRANCH == "master"'
   allow_failure: true
 
-Stage Plan:
-  stage: Terraform Plan
-  needs:
-    - Validate Terraform
-  script:
-    - cd terraform/
-    - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
-    - terraform init
-    - terraform workspace select stage || terraform workspace new stage
-    - terraform plan
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "stage"'
+# Stage Plan:
+#   stage: Plan
+#   needs:
+#     - Validate
+#   script:
+#     - cd terraform/
+#     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+#     - terraform init
+#     - terraform workspace select stage || terraform workspace new stage
+#     - terraform plan
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "stage"'
 
-Stage Apply:
-  stage: Terraform Apply
-  needs:
-    - Build and Push
-    - Stage Plan
-  script:
-    - cd terraform/
-    - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
-    - terraform init
-    - terraform workspace select stage
-    - terraform apply -auto-approve
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "stage"'
-      when: manual
+# Stage Apply:
+#   stage: Apply
+#   needs:
+#     - Build
+#     - Stage Plan
+#   script:
+#     - cd terraform/
+#     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+#     - terraform init
+#     - terraform workspace select stage
+#     - terraform apply -auto-approve
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "stage"'
+#       when: manual
 
-Production Plan:
-  stage: Terraform Plan
-  needs:
-    - Validate Terraform
-  script:
-    - cd terraform/
-    - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
-    - terraform init
-    - terraform workspace select prod || terraform workspace new prod
-    - terraform plan
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+# Production Plan:
+#   stage: Plan
+#   needs:
+#     - Validate
+#   script:
+#     - cd terraform/
+#     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+#     - terraform init
+#     - terraform workspace select prod || terraform workspace new prod
+#     - terraform plan
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "master"'
 
-Production Apply:
-  stage: Terraform Apply
-  needs:
-    - Build and Push
-    - Production Plan
-  script:
-    - cd terraform/
-    - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
-    - terraform init
-    - terraform workspace select prod
-    - terraform apply -auto-approve
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      when: manual
+# Production Apply:
+#   stage: Apply
+#   needs:
+#     - Build
+#     - Production Plan
+#   script:
+#     - cd terraform/
+#     - export TF_VAR_ecr_image_resume=$ECR_REPO:$CI_COMMIT_SHORT_SHA
+#     - terraform init
+#     - terraform workspace select prod
+#     - terraform apply -auto-approve
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "master"'
+#       when: manual
 
-Stage Destroy:
-  stage: Terraform Destroy
-  needs:
-    - Stage Plan
-  script:
-    - cd terraform/
-    - terraform init
-    - terraform workspace select stage
-    - terraform destroy -auto-approve
-  only:
-    variables:
-      - $STAGE_DESTROY == "True"
+# Stage Destroy:
+#   stage: Destroy
+#   needs:
+#     - Stage Plan
+#   script:
+#     - cd terraform/
+#     - terraform init
+#     - terraform workspace select stage
+#     - terraform destroy -auto-approve
+#   only:
+#     variables:
+#       - $STAGE_DESTROY == "True"
 
-Production Destroy:
-  stage: Terraform Destroy
-  needs:
-    - Production Plan
-  script:
-    - cd terraform/
-    - terraform init
-    - terraform workspace select prod
-    - terraform destroy -auto-approve
-  only:
-    variables:
-      - $PRODUCTION_DESTROY == "True"
+# Production Destroy:
+#   stage: Destroy
+#   needs:
+#     - Production Plan
+#   script:
+#     - cd terraform/
+#     - terraform init
+#     - terraform workspace select prod
+#     - terraform destroy -auto-approve
+#   only:
+#     variables:
+#       - $PRODUCTION_DESTROY == "True"
