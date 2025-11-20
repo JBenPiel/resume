@@ -1,9 +1,10 @@
 import os
+import re
 import yaml
 import shutil
 import click
 import jinja2
-import helpers
+import markdown
 from weasyprint import HTML
 
 defaults = {'labels': None}
@@ -33,7 +34,17 @@ def build(data, config):
     clean(output_dir)
     copy_static_data(theme_dir, output_dir)
 
-    vars = {**defaults, **data, 'config': config, 'h': helpers}
+    # Create helpers namespace for template compatibility
+    class Helpers:
+        @staticmethod
+        def md(text):
+            """
+            Process text as markdown and remove surrounding '<p>' tags
+            simple flat text if possible.
+            """
+            text = markdown.markdown(text, output_format='html5')
+            return re.sub('<p>(.*)?</p>', '\\1', text)
+    vars = {**defaults, **data, 'config': config, 'h': Helpers()}
     for filename in os.listdir(theme_dir):
         if filename.endswith('.jinja2'):
             html = render_template(os.path.join(theme_dir, filename), vars)
