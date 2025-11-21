@@ -6,7 +6,7 @@ body {
 }
 
 a {
-  color: #1C9C94;
+  color: black;
   text-decoration: none;
 }
 
@@ -60,11 +60,12 @@ h1 {
   margin: 1em 0;
 }
 
-h3 {
+h2 {
   text-transform: uppercase;
+  font-size: 1.17em;
 }
 
-h3, h4 {
+h2, h3 {
   font-weight: bold;
 }
 
@@ -119,7 +120,7 @@ a .fab, .far, .fas {
 }
 
 .school span, .job-title span {
-  color: #889499;
+  color: #504f4f;
   text-decoration: underline;
 }
 
@@ -132,7 +133,7 @@ ul.job-description li:before{
 footer {
   padding: 1em 1.5em;
   background: #A7B8BF;
-  color: white;
+  color: black;
   text-align: center;
 }
 

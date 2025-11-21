@@ -14,6 +14,9 @@
   <meta name="description" content="Simple résumé created with HTML and CSS">
   <link rel="icon" href="./img/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://use.fontawesome.com" crossorigin>
+  <link rel="preconnect" href="https://ka-f.fontawesome.com" crossorigin>
+  <link rel="preload" href="img/bg.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.1.0/css/all.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -21,7 +24,7 @@
 <body>
   <header>{% if profile.image %}
     <div>
-      <img src="{{ profile.image }}" alt="">
+      <img src="{{ profile.image }}" alt="" fetchpriority="high">
     </div>{% endif %}
     <section>
       <h1>
@@ -49,7 +52,7 @@
   
   <main>{% if work %}
     <section>
-      <h3>{{ labels.work or 'Work Experience' }}</h3>
+      <h2>{{ labels.work or 'Work Experience' }}</h2>
       <article>{% for exp in work %}
         <div class='job-title'>
           <strong>{{ exp.role }}</strong><br>{% if exp.website %}
@@ -65,11 +68,11 @@
       </article>
     </section>{% endif %}{% if skills %}
     <section>
-      <h3>Skills</h3>
+      <h2>Skills</h2>
       <article>
         <div class='skills'>{% for area in skills %}
           <div class='column'>
-            <h4>{{ area.area }}</h4>
+            <h3>{{ area.area }}</h3>
             <ul>{% for skill in area.skills %}
               <li>{{ skill }}</li>{% endfor %}
             </ul>
@@ -78,7 +81,7 @@
       </article>
     </section>{% endif %}{% if education %}
     <section>
-      <h3>Education</h3>
+      <h2>Education</h2>
       <article>{% for edu in education %}
         <div class="school">
           <p>
@@ -90,7 +93,7 @@
       </article>
     </section>{% endif %}{% if interests %}
     <section>
-      <h3>Personal Interests</h3>
+      <h2>Personal Interests</h2>
       <article>
         <div class='interests'>
           <ul>{% for interest in interests %}
@@ -100,7 +103,7 @@
       </article>
     </section>{% endif %}
     <section>
-      <h3>Contact Information</h3>
+      <h2>Contact Information</h2>
       <article>
         <div class='contact'>
           <div class='column'>
