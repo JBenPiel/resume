@@ -160,3 +160,48 @@ footer {
     text-align: center;
   }
 }
+@media print {
+  body {
+    font-size: 12px;
+    line-height: 1.45em;
+  }
+
+  header {
+    padding: 1.25em;
+  }
+
+  header section {
+    font-size: 14px;
+  }
+
+  section {
+    margin: 0.55em 0.75em;
+    padding: 0.55em 0.75em;
+  }
+
+  article {
+    padding: 0 0.5em;
+  }
+
+  .skills {
+    column-count: 2;
+    column-gap: 2em;
+    display: block;
+  }
+
+  .skills .column {
+    break-inside: avoid;
+    display: inline-block;
+    max-width: none;
+    width: 100%;
+  }
+
+  .skills .column ul {
+    margin-top: 0.4em;
+  }
+
+  .copyright-year,
+  .footer-actions {
+    display: none;
+  }
+}

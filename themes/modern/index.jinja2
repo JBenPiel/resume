@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://use.fontawesome.com" crossorigin>
   <link rel="preconnect" href="https://ka-f.fontawesome.com" crossorigin>
   <link rel="preload" href="img/bg.webp" as="image" fetchpriority="high">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.1.0/css/all.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.3.1/css/all.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -145,15 +145,15 @@
 
   <footer>
     <p>
-      &copy; <script type="text/javascript">
+      &copy; <span class="copyright-year"><script type="text/javascript">
 		  document.write(new Date().getFullYear());
-		  </script> {{ profile.name }} |
+		  </script> </span>{{ profile.name }}<span class="footer-actions"> |
       Download
 	    <a href="/{{ config.pdf_file }}" download="{{ config.pdf_file }}">PDF</a>{% if config.docx_file %}
-      or 
+      or
       <a href="{{ config.docx_file }}" download="{{ config.docx_file }}">DOCX</a>{% endif %} |
       <a href="/" onclick="window.print();">Print</a> |
-      <a href="#">Top</a>
+      <a href="#">Top</a></span>
     </p>
   </footer>
 </body>

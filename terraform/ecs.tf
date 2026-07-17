@@ -79,20 +79,14 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
   tags = local.common_tags
 }
 
-data "template_file" "resume_container_definitions" {
-  template = file("templates/ecs/container-definitions.json.tpl")
-
-  vars = {
+resource "aws_ecs_task_definition" "resume" {
+  family                   = "${local.prefix}-resume"
+  container_definitions    = templatefile("templates/ecs/container-definitions.json.tpl", {
     app_image        = var.ecr_image_resume
     log_group_name   = aws_cloudwatch_log_group.ecs_task_logs.name
     log_group_region = data.aws_region.current.name
     allowed_hosts    = aws_lb.resume.dns_name
-  }
-}
-
-resource "aws_ecs_task_definition" "resume" {
-  family                   = "${local.prefix}-resume"
-  container_definitions    = data.template_file.resume_container_definitions.rendered
+  })
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
