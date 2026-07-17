@@ -1,5 +1,5 @@
 image:
-  name: hashicorp/terraform:1.13
+  name: hashicorp/terraform:1.15
   entrypoint:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
@@ -23,10 +23,10 @@ Validate:
 
 Build:
   stage: Build
-  image: docker:29.0
+  image: docker:29
   needs: []
   services:
-    - docker:29.0-dind
+    - docker:29-dind
   script:
     - apk add python3 py3-pip
     - pip3 install awscli --break-system-packages
@@ -38,10 +38,10 @@ Build:
 
 Buildx:
   stage: Build
-  image: docker:29.0
+  image: docker:29
   needs: []
   services:
-    - name: docker:29.0-dind
+    - name: docker:29-dind
   script:
     - export DATE=$(date +%Y.%m.%d)
     - docker login -u $HUB_USER -p $HUB_PASSWORD
