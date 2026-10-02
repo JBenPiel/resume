@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "main" {
 resource "aws_subnet" "private_a" {
   cidr_block        = "10.1.1.0/24"
   vpc_id            = aws_vpc.main.id
-  availability_zone = "${data.aws_region.current.name}a"
+  availability_zone = "${data.aws_region.current.region}a"
 
   tags = merge(
     local.common_tags,
@@ -52,7 +52,7 @@ resource "aws_route" "private_internet_access_a" {
 resource "aws_subnet" "private_b" {
   cidr_block        = "10.1.2.0/24"
   vpc_id            = aws_vpc.main.id
-  availability_zone = "${data.aws_region.current.name}b"
+  availability_zone = "${data.aws_region.current.region}b"
 
   tags = merge(
     local.common_tags,

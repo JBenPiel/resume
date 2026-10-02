@@ -84,7 +84,7 @@ resource "aws_ecs_task_definition" "resume" {
   container_definitions = templatefile("templates/ecs/container-definitions.json.tpl", {
     app_image        = var.ecr_image_resume
     log_group_name   = aws_cloudwatch_log_group.ecs_task_logs.name
-    log_group_region = data.aws_region.current.name
+    log_group_region = data.aws_region.current.region
     allowed_hosts    = aws_lb.resume.dns_name
   })
   requires_compatibilities = ["FARGATE"]
