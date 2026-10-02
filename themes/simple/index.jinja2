@@ -151,11 +151,13 @@
             {% for exp in work %}
             <div class="item">
               <h3>{{ exp.role }}</h3>
-              {% if exp.website %}
               <p class="sticky">
+                {% if exp.website %}
                 <a href="{{ exp.website }}">{{ exp.company }}</a>
+                {% else %}
+                {{ exp.company }}
+                {% endif %}
               </p>
-              {% endif %}
               {% if exp.date %}
               <p class="sticky">{{ exp.date }}</p>
               {% endif %}

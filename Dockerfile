@@ -11,7 +11,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY main.py Makefile nginx.conf ./
+COPY resumes/ ./resumes/
+COPY themes/ ./themes/
 RUN make
 
 FROM nginx:alpine

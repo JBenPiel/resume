@@ -56,7 +56,8 @@
       <article>{% for exp in work %}
         <div class='job-title'>
           <strong>{{ exp.role }}</strong><br>{% if exp.website %}
-          <a href="{{ exp.website }}" target="_blank" rel="noreferrer">{{ exp.company }}</a><br>{% endif %}{% if exp.date %}
+          <a href="{{ exp.website }}" target="_blank" rel="noreferrer">{{ exp.company }}</a>{% else %}
+          {{ exp.company }}{% endif %}<br>{% if exp.date %}
           <span>{{ exp.date }}</span>{% endif %}
         </div>
         <div>{% if exp.summary %}
