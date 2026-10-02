@@ -28,30 +28,22 @@ Build:
   services:
     - docker:29-dind
   script:
-    - apk add python3 py3-pip
-    - pip3 install awscli --break-system-packages
+    - apk add --no-cache aws-cli
     - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e7k4f6o3
-    - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA -t $ECR_REPO:latest .
-    - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA && docker push $ECR_REPO:latest
+    - docker buildx create --use --name mybuilder --driver docker-container --bootstrap
+    - |
+      set -eu
+      set -- -t "$ECR_REPO:$CI_COMMIT_SHORT_SHA" -t "$ECR_REPO:latest"
+      # Preserve Docker Hub publishing for master and scheduled pipelines only.
+      if [ "$CI_PIPELINE_SOURCE" = "schedule" ] || [ "${CI_COMMIT_BRANCH:-}" = "master" ]; then
+        DATE=$(date +%Y.%m.%d)
+        printf '%s' "$HUB_PASSWORD" | docker login --username "$HUB_USER" --password-stdin
+        set -- "$@" -t "$HUB_REPO:$DATE" -t "$HUB_REPO:latest"
+      fi
+      docker buildx build --platform linux/amd64,linux/arm64 "$@" --push .
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_COMMIT_BRANCH =~ /^(master|stage)$/'
-
-Buildx:
-  stage: Build
-  image: docker:29
-  needs: []
-  services:
-    - name: docker:29-dind
-  script:
-    - export DATE=$(date +%Y.%m.%d)
-    - docker login -u $HUB_USER -p $HUB_PASSWORD
-    - docker buildx create --use --name mybuilder
-    - docker buildx build --platform linux/amd64,linux/arm64 -t $HUB_REPO:$DATE -t $HUB_REPO:latest . --push
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-    - if: '$CI_COMMIT_BRANCH == "master"'
-  allow_failure: true
 
 # Stage Plan:
 #   stage: Plan
