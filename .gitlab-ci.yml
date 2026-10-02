@@ -1,5 +1,5 @@
 image:
-  name: hashicorp/terraform:1.15
+  name: hashicorp/terraform:1.16
   entrypoint:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
@@ -34,6 +34,7 @@ Build:
     - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA -t $ECR_REPO:latest .
     - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA && docker push $ECR_REPO:latest
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_COMMIT_BRANCH =~ /^(master|stage)$/'
 
 Buildx:
@@ -48,6 +49,7 @@ Buildx:
     - docker buildx create --use --name mybuilder
     - docker buildx build --platform linux/amd64,linux/arm64 -t $HUB_REPO:$DATE -t $HUB_REPO:latest . --push
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_COMMIT_BRANCH == "master"'
   allow_failure: true
 

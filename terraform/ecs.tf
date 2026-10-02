@@ -80,8 +80,8 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
 }
 
 resource "aws_ecs_task_definition" "resume" {
-  family                   = "${local.prefix}-resume"
-  container_definitions    = templatefile("templates/ecs/container-definitions.json.tpl", {
+  family = "${local.prefix}-resume"
+  container_definitions = templatefile("templates/ecs/container-definitions.json.tpl", {
     app_image        = var.ecr_image_resume
     log_group_name   = aws_cloudwatch_log_group.ecs_task_logs.name
     log_group_region = data.aws_region.current.name
