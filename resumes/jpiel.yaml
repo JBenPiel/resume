@@ -62,7 +62,7 @@ skills:
 work:
     - company: Fitness & Wellbeing by Xplor
       role: Site Reliability Engineer
-      website: https://www.xplortechnologies.com/
+      website: https://xplor.com
       date: March 2021 - October 2021
       highlights:
         - High level of collaboration between team members leveraging Terraform to drive infrastructure as code across multiple VPC's.
@@ -82,7 +82,7 @@ work:
         - Worked together with teammates to write and maintain Python scripts to automate the action of creating and maintaining documentation within Confluence for various software and processes.
     - company: University of Arizona - Financial Services Office
       role: Senior System Administrator
-      website: https://www.fso.arizona.edu/
+      website: https://finance.arizona.edu
       date: January 2012 - May 2018
       highlights:
         - Integrated Puppet to manage Linux servers in staging and production environments; allowed the state and configuration of servers to be reviewed and deployed as code. Primary owner of Puppet modules and manifests used for internal various one-off processes. Over time migrated to using Ansible.
