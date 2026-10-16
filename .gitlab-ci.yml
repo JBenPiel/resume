@@ -10,6 +10,19 @@ stages:
   - Plan
   - Apply
   - Destroy
+  - Renovate
+
+include:
+  - project: 'renovate-bot/renovate-runner'
+    file: '/templates/renovate.gitlab-ci.yml'
+    ref: v26.1.0
+
+variables:
+  # Limit the scheduled Renovate runner to this repository.
+  RENOVATE_EXTRA_FLAGS: 'jpiel/resume'
+
+renovate:
+  stage: Renovate
 
 Validate:
   stage: Validate
