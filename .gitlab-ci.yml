@@ -23,6 +23,8 @@ variables:
 
 renovate:
   stage: Renovate
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $RENOVATE_RUN == "true"'
 
 Validate:
   stage: Validate
@@ -47,16 +49,16 @@ Build:
     - |
       set -eu
       set -- -t "$ECR_REPO:$CI_COMMIT_SHORT_SHA" -t "$ECR_REPO:latest"
-      # Preserve Docker Hub publishing for master and scheduled pipelines only.
-      if [ "$CI_PIPELINE_SOURCE" = "schedule" ] || [ "${CI_COMMIT_BRANCH:-}" = "master" ]; then
+      # Publish Docker Hub images on master and explicit Docker rebuild schedules only.
+      if ([ "$CI_PIPELINE_SOURCE" = "schedule" ] && [ "${DOCKER_REBUILD:-}" = "true" ]) || [ "${CI_COMMIT_BRANCH:-}" = "master" ]; then
         DATE=$(date +%Y.%m.%d)
         printf '%s' "$HUB_PASSWORD" | docker login --username "$HUB_USER" --password-stdin
         set -- "$@" -t "$HUB_REPO:$DATE" -t "$HUB_REPO:latest"
       fi
       docker buildx build --platform linux/amd64,linux/arm64 "$@" --push .
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-    - if: '$CI_COMMIT_BRANCH =~ /^(master|stage)$/'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $DOCKER_REBUILD == "true"'
+    - if: '$CI_PIPELINE_SOURCE != "schedule" && $CI_COMMIT_BRANCH =~ /^(master|stage)$/'
 
 # Stage Plan:
 #   stage: Plan
