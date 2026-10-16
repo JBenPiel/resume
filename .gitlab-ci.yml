@@ -34,7 +34,12 @@ Validate:
     - terraform validate
     - terraform fmt -check
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(master|stage)$/ || $CI_COMMIT_BRANCH =~ /^(master|stage)$/'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(master|stage)$/'
+      changes:
+        - terraform/**/*
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^(master|stage)$/'
+      changes:
+        - terraform/**/*
 
 Build:
   stage: Build
