@@ -3,5 +3,11 @@
   "extends": [
     "config:recommended",
     "gitlab>renovate-bot/renovate-runner"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["pip_requirements"],
+      "groupName": "Python dependencies"
+    }
   ]
 }
