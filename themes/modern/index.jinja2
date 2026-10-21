@@ -11,6 +11,9 @@
   <link rel="preload" href="img/bg.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.3.1/css/all.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/style.css">
+  <style media="print">
+    .profile-links { display: none !important; }
+  </style>
 </head>
 
 <body>
@@ -26,7 +29,8 @@
       </h1>
     </section>
     <section>
-      <p>{{ profile.summary }}</p>{% for network in profile.networks %}
+      <p>{{ profile.summary }}</p>
+      <div class="profile-links">{% for network in profile.networks %}
         <a href="{{ network.url }}" aria-label="{{ network.provider }}" target="_blank" rel="noreferrer">
           <i class="fab fa-{{ network.provider }}"></i>
         </a>{% endfor %}{% if profile.email %}
@@ -38,7 +42,7 @@
         </a>{% endif %}{% if profile.address %}
         <a href="https://www.google.com/maps?q={{ profile.address }}" aria-label="location" target="_blank" rel="noreferrer">
           <i class="fas fa-map-marker-alt"></i>
-        </a>{% endif %}
+        </a>{% endif %}</div>
     </section>
   </header>
   

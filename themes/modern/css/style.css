@@ -161,8 +161,11 @@ footer {
   }
 }
 @media print {
-  header section a {
-    display: none;
+  header section a,
+  header .fab,
+  header .far,
+  header .fas {
+    display: none !important;
   }
 
   body {
