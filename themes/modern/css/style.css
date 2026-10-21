@@ -161,6 +161,10 @@ footer {
   }
 }
 @media print {
+  header section a {
+    display: none;
+  }
+
   body {
     font-size: 12px;
     line-height: 1.45em;
