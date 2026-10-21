@@ -2,7 +2,7 @@ click==8.5.0
 Jinja2==3.1.6
 PyYAML==6.0.3
 WeasyPrint==70.0
-Markdown==3.11.1
+Markdown==3.11.2
 MarkupSafe==3.0.4
 cffi==2.1.1
 pycparser==3.11
