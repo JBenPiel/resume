@@ -12,7 +12,7 @@ webencodings==0.6.1
 tinyhtml5==2.1.0
 pydyf==0.13.0
 Pyphen==0.18.1
-Pillow==12.3.0
+Pillow==13.0.0
 fonttools[woff]==4.67.0
 brotli==1.2.1
 zopfli==0.4.3
