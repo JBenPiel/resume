@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # HTML and PDF output is shared by both target architectures.
-FROM --platform=$BUILDPLATFORM python:3.14 AS build
+FROM --platform=$BUILDPLATFORM python:3.15 AS build
 
 ARG RESUME
 
