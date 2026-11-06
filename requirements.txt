@@ -1,8 +1,8 @@
-click==8.5.0
+click==8.5.1
 Jinja2==3.1.6
 PyYAML==6.0.3
 WeasyPrint==70.0
-Markdown==3.11.2
+Markdown==3.11.3
 MarkupSafe==3.0.4
 cffi==2.1.1
 pycparser==3.12
@@ -13,6 +13,6 @@ tinyhtml5==2.1.0
 pydyf==0.13.0
 Pyphen==0.18.1
 Pillow==13.0.0
-fonttools[woff]==4.67.0
+fonttools[woff]==4.68.0
 brotli==1.2.1
 zopfli==0.4.3
